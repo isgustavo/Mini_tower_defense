@@ -17,6 +17,9 @@ namespace ODT.System
             public SubtractiveComponent<JumpComponent> Jump;
             public SubtractiveComponent<BlockComponent> Block;
             public SubtractiveComponent<StaticComponent> Static;
+            public SubtractiveComponent<BulletComponent> Bullet;
+            public SubtractiveComponent<IdleComponent> Idle;
+
         }
 
         [Inject] private ObjectData data;
