@@ -6,6 +6,8 @@ namespace ODT.System
 {
     public class JumpForwardSystem : ComponentSystem
     {
+        private readonly Vector3 JUMP = new Vector3(.3f, 1f, 0f);
+
         private struct ObjectData
         {
             public readonly int Length;
@@ -21,7 +23,7 @@ namespace ODT.System
             var puc = PostUpdateCommands;
             for (int i = 0; i < data.Length; i++)
             {
-                data.Transform[i].position += new Vector3(.3f, 1f, 0f);
+                data.Transform[i].position += JUMP;
                 puc.RemoveComponent<JumpComponent>(data.Entity[i]);
             }
         }

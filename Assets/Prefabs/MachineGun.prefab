@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 365484753883719148}
   - component: {fileID: 365484753883719149}
   - component: {fileID: 5794049075677811935}
-  - component: {fileID: 4779485965373159842}
+  - component: {fileID: 9214062890851779082}
   m_Layer: 15
   m_Name: MachineGun
   m_TagString: Untagged
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf10cdea1344482e91a4f2b58506b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4779485965373159842
+--- !u!114 &9214062890851779082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,6 +270,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 365484753883719146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55521434f509a48b6ad63632b21d4dba, type: 3}
+  m_Script: {fileID: 11500000, guid: 8317a54c8a40e4d659cd4957f45a757a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

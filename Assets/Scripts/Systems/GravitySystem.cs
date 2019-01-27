@@ -15,6 +15,7 @@ namespace ODT.System
             public ComponentArray<Transform> Transform;
             public SubtractiveComponent<JumpComponent> Jump;
             public SubtractiveComponent<BlockComponent> Block;
+            public SubtractiveComponent<StaticComponent> Static;
         }
 
         [Inject] private ObjectData data;
@@ -24,7 +25,6 @@ namespace ODT.System
             var puc = PostUpdateCommands;
             for (int i = 0; i < data.Length; i++)
             {
-                //Debug.DrawRay(data.Transform[i].position + new Vector3(0.5f, 0f, 0f), Vector3.down * .6f);
                 if (!Physics.Raycast(data.Transform[i].position + new Vector3(0.2f, 0f, 0f), Vector3.down, out RaycastHit hit, .6f))
                 {
                     data.Transform[i].position = new Vector3(data.Transform[i].position.x + .5f, data.Transform[i].position.y - 1, 0f);
