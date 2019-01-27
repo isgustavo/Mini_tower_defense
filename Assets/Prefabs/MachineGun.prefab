@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 365484752956652864}
   - component: {fileID: 365484752956652866}
   - component: {fileID: 365484752956652867}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 365484753090818145}
   - component: {fileID: 365484753090818147}
   - component: {fileID: 365484753090818144}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,9 @@ GameObject:
   - component: {fileID: 365484753883719151}
   - component: {fileID: 365484753883719148}
   - component: {fileID: 365484753883719149}
-  m_Layer: 0
+  - component: {fileID: 5794049075677811935}
+  - component: {fileID: 4779485965373159842}
+  m_Layer: 15
   m_Name: MachineGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,3 +249,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5794049075677811935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365484753883719146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf10cdea1344482e91a4f2b58506b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4779485965373159842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365484753883719146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55521434f509a48b6ad63632b21d4dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
