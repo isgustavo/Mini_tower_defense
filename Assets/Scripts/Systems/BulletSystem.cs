@@ -6,6 +6,7 @@ public class BulletSystem : ComponentSystem
 {
     private readonly int ENVIROMENT_LAYER_MASK = 1 << 16;
     private readonly int ENEMY_LAYER_MASK = 1 << 10;
+    private readonly int BIG_ENEMY_LAYER_MASK = 1 << 11;
 
     private struct ObjectData
     {
@@ -24,15 +25,18 @@ public class BulletSystem : ComponentSystem
 
         for (int i = 0; i < data.Length; i++)
         {
-            Debug.DrawRay(data.Transform[i].position, -Vector3.up * .2f);
-            if (Physics.Raycast(data.Transform[i].position, -Vector3.up, out RaycastHit hit, .2f, ENVIROMENT_LAYER_MASK))
+
+            Debug.DrawRay(data.Transform[i].position, data.Transform[i].forward, Color.blue);
+            Debug.DrawRay(data.Transform[i].position, data.Transform[i].right, Color.red);
+            Debug.DrawRay(data.Transform[i].position, data.Transform[i].up, Color.green);
+            if (Physics.Raycast(data.Transform[i].position, data.Transform[i].right, out RaycastHit hit, 1f, ENVIROMENT_LAYER_MASK))
             {
-                data.Transform[i].position = Vector3.zero;
+                data.Transform[i].position = new Vector3(0, -2, 2);
                 puc.AddComponent(data.Entity[i], new IdleComponent());
             }
-            else if (Physics.Raycast(data.Transform[i].position, -Vector3.up, out hit, .2f, ENEMY_LAYER_MASK))
+            else if (Physics.Raycast(data.Transform[i].position, data.Transform[i].right, out hit, .2f, ENEMY_LAYER_MASK | BIG_ENEMY_LAYER_MASK))
             {
-                data.Transform[i].position = Vector3.zero;
+                data.Transform[i].position = new Vector3(0, -2, 2);
                 puc.AddComponent(data.Entity[i], new IdleComponent());
 
                 var entity = hit.transform.GetComponent<GameObjectEntity>();

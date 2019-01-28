@@ -8,6 +8,8 @@ namespace ODT.Component
     {
         public Transform[] cannonTransform;
 
+        public GameObject bulletPrefab;
+
         public float timeBetweenShoot;
 
         public float lastShootTime; 

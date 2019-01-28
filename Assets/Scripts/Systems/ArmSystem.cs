@@ -24,7 +24,7 @@ namespace ODT.System
             public readonly int Length;
             public EntityArray Entity;
             public ComponentArray<Transform> Transform;
-            public ComponentDataArray<EnemyComponent> Enemy;
+            public ComponentArray<HealthComponent> Health;
             public SubtractiveComponent<IdleComponent> Idle;
         }
 

@@ -30,7 +30,7 @@ public class DamageSystem : ComponentSystem
             if (data.Health[i].currentHealth <= 0) 
             {
                 puc.AddComponent(data.Entity[i], new IdleComponent());
-                data.Transform[i].position = Vector3.zero;
+                data.Transform[i].position = new Vector3(0, -2, 2);
             }
         }
     }

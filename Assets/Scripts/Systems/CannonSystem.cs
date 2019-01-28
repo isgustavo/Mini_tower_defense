@@ -31,9 +31,15 @@ namespace ODT.System
             for (int i = 0; i < cannonData.Length; i++) 
             {
                 var cannon = cannonData.Cannon[i];
-                if (cannon.lastShootTime <= 0 && bulletData.Length > 0)
+                if (cannon.lastShootTime <= 0)
                 {
-                    ReSpawnBullet(cannon);
+                    if(bulletData.Length > 0)
+                    {
+                        ReSpawnBullet(cannon);
+                    } else
+                    {
+                        SpawnBullet(cannon);
+                    }
                     cannon.lastShootTime = cannon.timeBetweenShoot;
                 }
 
@@ -50,6 +56,16 @@ namespace ODT.System
                 puc.RemoveComponent<IdleComponent>(bulletData.Entity[i]);
                 bulletData.Transform[i].position = cannon.cannonTransform[i].position;
                 bulletData.Transform[i].rotation = cannon.cannonTransform[i].rotation;
+            }
+        }
+
+        private void SpawnBullet(CannonComponent cannon) 
+        {
+            for (int i = 0; i < cannon.cannonTransform.Length; i++)
+            {
+                Object.Instantiate(cannon.bulletPrefab, 
+                                        cannon.cannonTransform[i].position,
+                                            cannon.cannonTransform[i].rotation);
             }
         }
     }
