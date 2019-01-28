@@ -11,7 +11,7 @@ namespace ODT.System
             public readonly int Length;
             public EntityArray Entity;
             public ComponentArray<Transform> Transform;
-            public ComponentDataArray<BlockComponent> Block;
+            public ComponentDataArray<BlockedComponent> Block;
         }
 
         [Inject] private ObjectData data;
@@ -26,7 +26,7 @@ namespace ODT.System
                 {
                     if (!Physics.Raycast(data.Transform[i].position, Vector3.up, out hit, 1f)) 
                     {
-                        puc.RemoveComponent<BlockComponent>(data.Entity[i]);
+                        puc.RemoveComponent<BlockedComponent>(data.Entity[i]);
                     }
                 }
             }

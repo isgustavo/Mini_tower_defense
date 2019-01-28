@@ -14,18 +14,23 @@ namespace ODT.System
             public readonly int Length;
             public EntityArray Entity;
             public ComponentArray<Transform> Transform;
+            public ComponentDataArray<MoveSpeed> Speed;
             public SubtractiveComponent<JumpComponent> Jump;
-            public SubtractiveComponent<BlockComponent> Block;
+            public SubtractiveComponent<BlockedComponent> Block;
             public SubtractiveComponent<StaticComponent> Static;
-            public SubtractiveComponent<BulletComponent> Bullet;
             public SubtractiveComponent<IdleComponent> Idle;
-
         }
 
         [Inject] private ObjectData data;
 
         protected override void OnUpdate()
         {
+            for (int i = 0; i < data.Length; i++)
+            {
+                data.Transform[i].Translate(Vector3.forward * data.Speed[i].Value * Time.deltaTime);
+            }
+
+            /*
             var puc = PostUpdateCommands;
 
             for (int i = 0; i < data.Length; i++) 
@@ -44,9 +49,10 @@ namespace ODT.System
                     }
                 } else
                 {
-                    data.Transform[i].Translate(Vector3.right * Time.deltaTime);
+
                 }
-            }
+            }*/
         }
+
     }
 }
