@@ -28,13 +28,13 @@ namespace ODT.System
 
             for (int i = 0; i < data.Length; i++)
             {
-                if (Physics.Raycast(data.Transform[i].position, Vector3.right, out RaycastHit hit, .5f, BUILD_LAYER_MASK))
+                if (Physics.Raycast(data.Transform[i].position, data.Transform[i].forward, out RaycastHit hit, .5f, BUILD_LAYER_MASK))
                 {
                     puc.AddComponent(data.Entity[i], new BlockedComponent());
                 } 
-                else if (Physics.Raycast(data.Transform[i].position, Vector3.right, out hit, .5f, ENEMY_LAYER_MASK))
+                else if (Physics.Raycast(data.Transform[i].position, data.Transform[i].forward, out hit, .5f, ENEMY_LAYER_MASK))
                 {
-                    if (Physics.Raycast(hit.transform.position, Vector3.up, out hit, 1, ENEMY_LAYER_MASK))
+                    if (Physics.Raycast(hit.transform.position, Vector3.up, out hit, 2f))
                     {
                         puc.AddComponent(data.Entity[i], new BlockedComponent());
                     }

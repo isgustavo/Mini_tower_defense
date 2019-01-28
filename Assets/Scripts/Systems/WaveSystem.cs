@@ -11,6 +11,7 @@ namespace ODT.System
             public readonly int Length;
             public EntityArray Entity;
             public ComponentArray<Transform> Transform;
+            public ComponentDataArray<EnemyComponent> Enemy;
             public ComponentDataArray<IdleComponent> Idle;
         }
 
@@ -32,7 +33,7 @@ namespace ODT.System
             {
                 var wave = waveData.Wave[i];
 
-                if(wave.CurrentWave >= wave.Count)
+                if(wave.CurrentWave > wave.Count)
                 {
                     continue; 
                 }
@@ -47,7 +48,7 @@ namespace ODT.System
                 {
                     NewWave(wave.CurrentWave, 
                                 wave.Multiplay, 
-                                    wave.waveSpawn[Random.Range(0, wave.waveSpawn.Length - 1)],
+                                    wave.waveSpawn[Random.Range(0, wave.waveSpawn.Length)],
                                         wave.enemyPrefab);
 
                     wave.CurrentWave += 1;
@@ -72,7 +73,7 @@ namespace ODT.System
         {
             for (int i = 0; i < poolCount; i++) 
             {
-                Object.Instantiate(objPrefab[Random.Range(0, objPrefab.Length - 1)],
+                Object.Instantiate(objPrefab[Random.Range(0, objPrefab.Length)],
                                                             startPoint.position - (Vector3.right * i * 2), startPoint.rotation);
             }
         }

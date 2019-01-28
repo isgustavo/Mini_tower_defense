@@ -31,7 +31,13 @@ namespace ODT.System
             {
                 if (!Physics.Raycast(data.Transform[i].position + POSITION_OFFSET, Vector3.down, out RaycastHit hit, .6f))
                 {
-                    data.Transform[i].position = new Vector3(data.Transform[i].position.x + .5f, data.Transform[i].position.y - 1, 0f);
+                    if(data.Transform[i].position.x < 0)
+                    {
+                        data.Transform[i].position = new Vector3(data.Transform[i].position.x + .5f, data.Transform[i].position.y - 1, 0f);
+                    } else
+                    {
+                        data.Transform[i].position = new Vector3(data.Transform[i].position.x - .5f, data.Transform[i].position.y - 1, 0f);
+                    }
                 }
             }
         }

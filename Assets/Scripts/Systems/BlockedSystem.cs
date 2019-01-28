@@ -6,6 +6,8 @@ namespace ODT.System
 {
     public class BlockedSystem : ComponentSystem
     {
+        private readonly int ENEMY_LAYER_MASK = 1 << 10;
+
         private struct ObjectData
         {
             public readonly int Length;
