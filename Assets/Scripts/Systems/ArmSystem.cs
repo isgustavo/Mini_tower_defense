@@ -45,11 +45,15 @@ namespace ODT.System
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
+            if (objData.Length <= 0)
+            {
+                return inputDeps;
+            }
+
             for (int i = 0; i < armData.Length; i++)
             {
-               
+              
                SetTargetTo(i, inputDeps);
-
 
                 Vector3 difference = armData.Arm[i].target.position - armData.Arm[i].transform.position;
                 float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;

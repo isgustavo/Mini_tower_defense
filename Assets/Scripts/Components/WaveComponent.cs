@@ -7,7 +7,7 @@ namespace ODT.Component
         public int Count;
         public int Multiplay;
         [HideInInspector]
-        public int CurrentWave = 0;
+        public int CurrentWave;
         public float TimeStartFirstWave;
         public float TimeBetweenWaves;
         [HideInInspector]

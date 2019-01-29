@@ -7,6 +7,7 @@ namespace ODT.System
     public class CollisionSystem : ComponentSystem
     {
         private readonly int BUILD_LAYER_MASK = 1 << 15;
+        private readonly int TARGET_LAYER_MASK = 1 << 17;
         private readonly int ENEMY_LAYER_MASK = 1 << 10;
         private readonly int BIG_ENEMY_LAYER_MASK = 1 << 11;
 
@@ -29,7 +30,7 @@ namespace ODT.System
 
             for (int i = 0; i < data.Length; i++)
             {
-                if (Physics.Raycast(data.Transform[i].position, data.Transform[i].forward, out RaycastHit hit, .5f, BUILD_LAYER_MASK | BIG_ENEMY_LAYER_MASK))
+                if (Physics.Raycast(data.Transform[i].position, data.Transform[i].forward, out RaycastHit hit, .5f, BUILD_LAYER_MASK | BIG_ENEMY_LAYER_MASK | TARGET_LAYER_MASK))
                 {
                     puc.AddComponent(data.Entity[i], new BlockedComponent());
                 } 

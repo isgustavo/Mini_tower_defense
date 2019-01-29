@@ -25,10 +25,6 @@ public class BulletSystem : ComponentSystem
 
         for (int i = 0; i < data.Length; i++)
         {
-
-            Debug.DrawRay(data.Transform[i].position, data.Transform[i].forward, Color.blue);
-            Debug.DrawRay(data.Transform[i].position, data.Transform[i].right, Color.red);
-            Debug.DrawRay(data.Transform[i].position, data.Transform[i].up, Color.green);
             if (Physics.Raycast(data.Transform[i].position, data.Transform[i].right, out RaycastHit hit, 1f, ENVIROMENT_LAYER_MASK))
             {
                 data.Transform[i].position = new Vector3(0, -2, 2);

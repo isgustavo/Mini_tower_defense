@@ -26,6 +26,15 @@ namespace ODT.System
 
         [Inject] private WaveData waveData;
 
+        private struct WaveUIData
+        {
+            public readonly int Length;
+            public EntityArray Entity;
+            public ComponentArray<UIWaveComponent> Wave;
+        }
+
+        [Inject] private WaveUIData uiData;
+
         protected override void OnUpdate()
         {
 
@@ -51,6 +60,7 @@ namespace ODT.System
                                     wave.waveSpawn[Random.Range(0, wave.waveSpawn.Length)],
                                         wave.enemyPrefab);
 
+                    uiData.Wave[0].UIWave.text = string.Format("Wave: {0}", wave.CurrentWave.ToString("00"));
                     wave.CurrentWave += 1;
                     wave.CurrentTime = wave.TimeBetweenWaves;
                 }
