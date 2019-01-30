@@ -105,9 +105,9 @@ namespace ODT.System
         private void NewWave(int[] wave, Transform startPoint, GameObject[] objPrefab)
         {
             var lastPosition = Vector3.zero;
-            lastPosition = RespawnSmallObj(smallObjData.Length - wave[0], startPoint, lastPosition);
+            lastPosition = RespawnSmallObj(startPoint, lastPosition);
             lastPosition = SpawnIfNecessary(wave[0] - smallObjData.Length, startPoint, lastPosition, objPrefab[0]);
-            lastPosition = RespawnBigObj(bigObjData.Length - wave[1], startPoint, lastPosition);
+            lastPosition = RespawnBigObj(startPoint, lastPosition);
             SpawnIfNecessary(wave[1] - bigObjData.Length, startPoint, lastPosition, objPrefab[1]);
 
         }
@@ -123,11 +123,11 @@ namespace ODT.System
             return lastPosition;
         }
 
-        private Vector3 RespawnSmallObj(int poolCount, Transform startPoint, Vector3 lastPosition)
+        private Vector3 RespawnSmallObj(Transform startPoint, Vector3 lastPosition)
         {
             var puc = PostUpdateCommands;
 
-            for (int i = 0; i < smallObjData.Length && i <= poolCount; i++)
+            for (int i = 0; i < smallObjData.Length; i++)
             {
                 lastPosition += startPoint.position.x > 0 ? (Vector3.right * 2) : -(Vector3.right * 2);
                 smallObjData.Transform[i].position = startPoint.position + lastPosition;
@@ -142,17 +142,18 @@ namespace ODT.System
             return lastPosition;
         }
 
-        private Vector3 RespawnBigObj(int poolCount, Transform startPoint, Vector3 lastPosition)
+        private Vector3 RespawnBigObj(Transform startPoint, Vector3 lastPosition)
         {
             var puc = PostUpdateCommands;
 
-            for (int i = 0; i < bigObjData.Length && i <= poolCount; i++)
+            for (int i = 0; i < bigObjData.Length; i++)
             {
                 lastPosition += startPoint.position.x > 0 ? (Vector3.right * 2) : -(Vector3.right * 2);
                 bigObjData.Transform[i].position = startPoint.position + lastPosition;
                 bigObjData.Transform[i].rotation = startPoint.rotation;
 
                 bigObjData.Health[i].currentHealth = bigObjData.Health[i].health;
+                bigObjData.Health[i].healthBar.fillAmount = bigObjData.Health[i].currentHealth / bigObjData.Health[i].health;
 
                 puc.RemoveComponent<IdleComponent>(bigObjData.Entity[i]);
             }

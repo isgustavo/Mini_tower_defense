@@ -119,4 +119,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SerializedData:
     speed: 30
-    damage: 5
+    damage: 2

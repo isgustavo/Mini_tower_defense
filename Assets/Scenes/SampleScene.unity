@@ -1439,7 +1439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Count: 5
-  wavesConfig: 2|0,2|1,4|2,8|4,12|8
+  wavesConfig: 2|0,3|1,4|2,5|3,6|4
   CurrentWave: 0
   TimeStartFirstWave: 0.5
   TimeBetweenWaves: 10
@@ -1447,6 +1447,7 @@ MonoBehaviour:
   enemyPrefab:
   - {fileID: 6026534022156463703, guid: 2e05733e92bf24c31b100135cd9958f3, type: 3}
   - {fileID: 7152388594461123189, guid: 4e067f7ef64c24bf2ad0884c6fb642b6, type: 3}
+  lastSpawnIndex: 0
   waveSpawn:
   - {fileID: 176585748}
   - {fileID: 1645687998}

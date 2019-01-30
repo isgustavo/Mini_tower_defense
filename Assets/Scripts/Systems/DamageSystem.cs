@@ -25,7 +25,10 @@ public class DamageSystem : ComponentSystem
         {
             data.Health[i].currentHealth -= data.Damage[i].damange;
 
-            data.Health[i].healthBar.fillAmount = data.Health[i].currentHealth / data.Health[i].health;
+            if(data.Health[i].healthBar != null)
+            {
+                data.Health[i].healthBar.fillAmount = data.Health[i].currentHealth / data.Health[i].health;
+            }
 
             puc.RemoveComponent<DamageComponent>(data.Entity[i]);
 
