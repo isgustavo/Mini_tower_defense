@@ -15,11 +15,24 @@ namespace ODT.System
             public EntityArray Entity;
             public ComponentArray<UIPopUpComponent> UI;
         }
-
         [Inject] private UIData uiData;
+
+        private struct UIPopUp
+        {
+            public readonly int Length;
+            public EntityArray Entity;
+            public ComponentDataArray<UIActiveComponent> UI;
+        }
+        [Inject] private UIPopUp popUpData;
 
         protected override void OnUpdate()
         {
+
+            if (popUpData.Length > 0) 
+            {
+                return;
+            }
+
             var puc = PostUpdateCommands;
 
             if (Input.GetMouseButtonDown(0))
