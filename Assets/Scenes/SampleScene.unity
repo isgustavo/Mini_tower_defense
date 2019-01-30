@@ -1438,8 +1438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a14f7002a1d46ca8d20c5892b3f110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Count: 1
-  Multiplay: 2
+  Count: 5
+  wavesConfig: 2|0,2|1,4|2,8|4,12|8
   CurrentWave: 0
   TimeStartFirstWave: 0.5
   TimeBetweenWaves: 10

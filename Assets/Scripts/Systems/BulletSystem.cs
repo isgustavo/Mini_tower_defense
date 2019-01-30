@@ -2,6 +2,7 @@
 using Unity.Entities;
 using UnityEngine;
 
+[UpdateAfter(typeof(DamageSystem))]
 public class BulletSystem : ComponentSystem
 {
     private readonly int ENVIROMENT_LAYER_MASK = 1 << 16;
@@ -15,6 +16,7 @@ public class BulletSystem : ComponentSystem
         public ComponentArray<Transform> Transform;
         public ComponentDataArray<BulletComponent> Bullet;
         public SubtractiveComponent<IdleComponent> Idle;
+        public SubtractiveComponent<DamageComponent> Damage;
     }
 
     [Inject] private ObjectData data;
@@ -34,9 +36,10 @@ public class BulletSystem : ComponentSystem
             {
                 data.Transform[i].position = new Vector3(0, -2, 2);
                 puc.AddComponent(data.Entity[i], new IdleComponent());
-
+                  
                 var entity = hit.transform.GetComponent<GameObjectEntity>();
                 puc.AddComponent(entity.Entity, new DamageComponent { damange = data.Bullet[i].damage });
+
             }
             else
             {

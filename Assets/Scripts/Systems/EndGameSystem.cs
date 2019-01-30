@@ -12,6 +12,7 @@ public class EndGameSystem : ComponentSystem
         public EntityArray Entity;
         public ComponentArray<Transform> Transform;
         public ComponentArray<HealthComponent> Health;
+        public SubtractiveComponent<BlockedComponent> Block;
     }
 
     [Inject] private ObjectData data;

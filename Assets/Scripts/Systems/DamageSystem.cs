@@ -2,6 +2,7 @@
 using Unity.Entities;
 using UnityEngine;
 
+[UpdateAfter(typeof(CannonComponent))]
 public class DamageSystem : ComponentSystem
 {
     private struct ObjectData
@@ -11,6 +12,7 @@ public class DamageSystem : ComponentSystem
         public ComponentArray<Transform> Transform;
         public ComponentArray<HealthComponent> Health;
         public ComponentDataArray<DamageComponent> Damage;
+        public SubtractiveComponent<IdleComponent> Idle;
     }
 
     [Inject] private ObjectData data;

@@ -1,21 +1,36 @@
-﻿using ODT.Component;
+﻿using System;
+using ODT.Component;
 using Unity.Entities;
 using UnityEngine;
 
 namespace ODT.System
 {
+    [UpdateAfter(typeof(DamageSystem))]
     public class WaveSystem : ComponentSystem
     {
-        private struct ObjectData
+        private struct SmallObjectData
         {
             public readonly int Length;
             public EntityArray Entity;
             public ComponentArray<Transform> Transform;
-            public ComponentDataArray<EnemyComponent> Enemy;
+            public ComponentArray<HealthComponent> Health;
+            public ComponentDataArray<SmallEnemyComponent> Enemy;
             public ComponentDataArray<IdleComponent> Idle;
         }
 
-        [Inject] private ObjectData idleData;
+        [Inject] private SmallObjectData smallObjData;
+
+        private struct BigObjectData
+        {
+            public readonly int Length;
+            public EntityArray Entity;
+            public ComponentArray<Transform> Transform;
+            public ComponentArray<HealthComponent> Health;
+            public ComponentDataArray<BigEnemyComponent> Enemy;
+            public ComponentDataArray<IdleComponent> Idle;
+        }
+
+        [Inject] private BigObjectData bigObjData;
 
         private struct WaveData
         {
@@ -55,9 +70,19 @@ namespace ODT.System
 
                 if (wave.CurrentTime <= 0)
                 {
-                    NewWave(wave.CurrentWave, 
-                                wave.Multiplay, 
-                                    wave.waveSpawn[Random.Range(0, wave.waveSpawn.Length)],
+
+                    int[] waveConfig = GetWaveConfig(wave.CurrentWave, wave.wavesConfig);
+
+                    int spawnPoint = 0;
+                    while (spawnPoint == wave.lastSpawnIndex) 
+                    {
+                        spawnPoint = UnityEngine.Random.Range(0, wave.waveSpawn.Length);
+                    }
+
+                    wave.lastSpawnIndex = spawnPoint;
+
+                    NewWave(waveConfig,
+                                    wave.waveSpawn[spawnPoint],
                                         wave.enemyPrefab);
 
                     uiData.Wave[0].UIWave.text = string.Format("Wave: {0}", wave.CurrentWave.ToString("00"));
@@ -70,35 +95,69 @@ namespace ODT.System
             }
         }
 
-        private void NewWave(int wave, int multiplay, Transform startPoint, GameObject[] objPrefab)
+        private int[] GetWaveConfig(int currentWave, string waveConfig)
         {
-            int total = wave * multiplay;
-            int poolCount = total - idleData.Length;
-
-            SpawnIfNecessary(poolCount, startPoint, objPrefab);
-            Respawn(startPoint);
+            string[] waves = waveConfig.Split(',');
+            string[] w = waves[currentWave - 1].Split('|');
+            return new int[] { int.Parse(w[0]), int.Parse(w[1])};
         }
 
-        private void SpawnIfNecessary(int poolCount, Transform startPoint, GameObject[] objPrefab) 
+        private void NewWave(int[] wave, Transform startPoint, GameObject[] objPrefab)
+        {
+            var lastPosition = Vector3.zero;
+            lastPosition = RespawnSmallObj(smallObjData.Length - wave[0], startPoint, lastPosition);
+            lastPosition = SpawnIfNecessary(wave[0] - smallObjData.Length, startPoint, lastPosition, objPrefab[0]);
+            lastPosition = RespawnBigObj(bigObjData.Length - wave[1], startPoint, lastPosition);
+            SpawnIfNecessary(wave[1] - bigObjData.Length, startPoint, lastPosition, objPrefab[1]);
+
+        }
+
+        private Vector3 SpawnIfNecessary(int poolCount, Transform startPoint, Vector3 lastPosition, GameObject objPrefab) 
         {
             for (int i = 0; i < poolCount; i++) 
             {
-                Object.Instantiate(objPrefab[Random.Range(0, objPrefab.Length)],
-                                                            startPoint.position - (Vector3.right * i * 2), startPoint.rotation);
+                lastPosition += startPoint.position.x > 0 ? (Vector3.right * 2) : -(Vector3.right * 2);
+                UnityEngine.Object.Instantiate(objPrefab, startPoint.position + lastPosition, startPoint.rotation);
             }
+
+            return lastPosition;
         }
 
-        private void Respawn(Transform startPoint)
+        private Vector3 RespawnSmallObj(int poolCount, Transform startPoint, Vector3 lastPosition)
         {
             var puc = PostUpdateCommands;
 
-            for (int i = 0; i < idleData.Length; i++) 
+            for (int i = 0; i < smallObjData.Length && i <= poolCount; i++)
             {
-                idleData.Transform[i].position = startPoint.position;
-                idleData.Transform[i].rotation = startPoint.rotation;
+                lastPosition += startPoint.position.x > 0 ? (Vector3.right * 2) : -(Vector3.right * 2);
+                smallObjData.Transform[i].position = startPoint.position + lastPosition;
+                smallObjData.Transform[i].rotation = startPoint.rotation;
 
-                puc.RemoveComponent<IdleComponent>(idleData.Entity[i]);
+                smallObjData.Health[i].currentHealth = smallObjData.Health[i].health;
+                smallObjData.Health[i].healthBar.fillAmount = smallObjData.Health[i].currentHealth / smallObjData.Health[i].health;
+
+                puc.RemoveComponent<IdleComponent>(smallObjData.Entity[i]);
             }
+
+            return lastPosition;
+        }
+
+        private Vector3 RespawnBigObj(int poolCount, Transform startPoint, Vector3 lastPosition)
+        {
+            var puc = PostUpdateCommands;
+
+            for (int i = 0; i < bigObjData.Length && i <= poolCount; i++)
+            {
+                lastPosition += startPoint.position.x > 0 ? (Vector3.right * 2) : -(Vector3.right * 2);
+                bigObjData.Transform[i].position = startPoint.position + lastPosition;
+                bigObjData.Transform[i].rotation = startPoint.rotation;
+
+                bigObjData.Health[i].currentHealth = bigObjData.Health[i].health;
+
+                puc.RemoveComponent<IdleComponent>(bigObjData.Entity[i]);
+            }
+
+            return lastPosition;
         }
     }
 }
